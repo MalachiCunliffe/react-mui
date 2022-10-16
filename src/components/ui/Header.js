@@ -1,4 +1,5 @@
 import React from "react";
+import { useState } from "react";
 import {
   AppBar,
   Toolbar,
@@ -45,12 +46,17 @@ const useStyles = makeStyles((theme) => ({
     borderRadius: "50px",
     marginLeft: "50px",
     marginRight: "25px",
-    height: "45px"
-  }
+    height: "45px",
+  },
 }));
 
 export default function Header(props) {
   const classes = useStyles();
+  const [selectedTab, setSelectedTab] = useState(0);
+
+  const tabSelectHandler = (e, value) => {
+    setSelectedTab(value);
+  };
 
   return (
     <>
@@ -58,14 +64,25 @@ export default function Header(props) {
         <AppBar>
           <Toolbar disableGutters>
             <img className={classes.logo} src={logo} alt="company logo" />
-            <Tabs className={classes.tabContainer}>
+            <Tabs
+              value={selectedTab}
+              onChange={tabSelectHandler}
+              className={classes.tabContainer}
+              indicatorColor="primary"
+            >
               <Tab className={classes.tab} label="Home" />
               <Tab className={classes.tab} label="Services" />
               <Tab className={classes.tab} label="The Revolution" />
               <Tab className={classes.tab} label="About Us" />
               <Tab className={classes.tab} label="Contact Us" />
             </Tabs>
-            <Button variant="contained" color="secondary" className={classes.button} >Free estimate</Button>
+            <Button
+              variant="contained"
+              color="secondary"
+              className={classes.button}
+            >
+              Free estimate
+            </Button>
           </Toolbar>
         </AppBar>
       </ElevationScroll>
