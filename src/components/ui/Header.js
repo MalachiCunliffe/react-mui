@@ -1,5 +1,5 @@
 import React from "react";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import {
   AppBar,
   Toolbar,
@@ -9,7 +9,7 @@ import {
   Tabs,
   Button,
 } from "@material-ui/core";
-
+import { Link } from "react-router-dom";
 import logo from "../../assets/logo.svg";
 
 function ElevationScroll(props) {
@@ -31,7 +31,13 @@ const useStyles = makeStyles((theme) => ({
     marginBottom: "3em",
   },
   logo: {
-    height: "7em",
+    height: "8em",
+  },
+  logoContainer: {
+    padding: 0,
+    "&:hover": {
+      backgroundColor: "transparent"
+    }
   },
   tabContainer: {
     marginLeft: "auto",
@@ -58,23 +64,75 @@ export default function Header(props) {
     setSelectedTab(value);
   };
 
+  useEffect(() => {
+    if (window.location.pathname === "/" && selectedTab !== 0) {
+      setSelectedTab(0);
+    } else if (window.location.pathname === "/services" && selectedTab !== 1) {
+      setSelectedTab(1);
+    } else if (
+      window.location.pathname === "/revolution" &&
+      selectedTab !== 2
+    ) {
+      setSelectedTab(2);
+    } else if (window.location.pathname === "/about" && selectedTab !== 3) {
+      setSelectedTab(3);
+    } else if (window.location.pathname === "/contact" && selectedTab !== 4) {
+      setSelectedTab(4);
+    } else if (window.location.pathname === "/estimate" && selectedTab !== 5) {
+      setSelectedTab(5);
+    }
+  }, [selectedTab]);
+
   return (
     <>
       <ElevationScroll>
         <AppBar>
           <Toolbar disableGutters>
-            <img className={classes.logo} src={logo} alt="company logo" />
+            <Button
+              component={Link}
+              to="/"
+              className={classes.logoContainer}
+              onClick={() => selectedTab(0)}
+              disableRipple
+            >
+              <img className={classes.logo} src={logo} alt="company logo" />
+            </Button>
             <Tabs
               value={selectedTab}
               onChange={tabSelectHandler}
               className={classes.tabContainer}
               indicatorColor="primary"
             >
-              <Tab className={classes.tab} label="Home" />
-              <Tab className={classes.tab} label="Services" />
-              <Tab className={classes.tab} label="The Revolution" />
-              <Tab className={classes.tab} label="About Us" />
-              <Tab className={classes.tab} label="Contact Us" />
+              <Tab
+                className={classes.tab}
+                component={Link}
+                to="/"
+                label="Home"
+              />
+              <Tab
+                className={classes.tab}
+                component={Link}
+                to="/services"
+                label="Services"
+              />
+              <Tab
+                className={classes.tab}
+                component={Link}
+                to="/revolution"
+                label="The Revolution"
+              />
+              <Tab
+                className={classes.tab}
+                component={Link}
+                to="/about"
+                label="About Us"
+              />
+              <Tab
+                className={classes.tab}
+                component={Link}
+                to="/contact"
+                label="Contact Us"
+              />
             </Tabs>
             <Button
               variant="contained"
