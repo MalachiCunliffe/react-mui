@@ -126,7 +126,7 @@ export default function Header(props) {
               <Tab
                 aria-owns={anchorEl ? "simple-menu" : undefined}
                 aria-haspopup={anchorEl ? "true" : undefined}
-                onClick={(event) => menuOpenHandler(event)}
+                onMouseOver={(event) => menuOpenHandler(event)}
                 className={classes.tab}
                 component={Link}
                 to="/services"
@@ -163,14 +163,34 @@ export default function Header(props) {
               anchorEl={anchorEl}
               open={menuOpen}
               onClose={menuCloseHandler}
+              MenuListProps={{ onMouseLeave: menuCloseHandler }}
             >
-              <MenuItem onClick={menuCloseHandler}>
+              <MenuItem
+                onClick={() => {menuCloseHandler(); setSelectedTab(1);}}
+                component={Link}
+                to="/services"
+              >
+                Services
+              </MenuItem>
+              <MenuItem
+                onClick={() => {menuCloseHandler(); setSelectedTab(1);}}
+                component={Link}
+                to="/customsoftware"
+              >
                 Custom Software Development
               </MenuItem>
-              <MenuItem onClick={menuCloseHandler}>
+              <MenuItem
+                onClick={() => {menuCloseHandler(); setSelectedTab(1);}}
+                component={Link}
+                to="/mobileapps"
+              >
                 Mobile App Development
               </MenuItem>
-              <MenuItem onClick={menuCloseHandler}>
+              <MenuItem
+                onClick={() => {menuCloseHandler(); setSelectedTab(1);}}
+                component={Link}
+                to="/wesites"
+              >
                 Website Development
               </MenuItem>
             </Menu>
