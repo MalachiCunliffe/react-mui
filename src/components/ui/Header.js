@@ -8,6 +8,8 @@ import {
   Tab,
   Tabs,
   Button,
+  Menu,
+  MenuItem,
 } from "@material-ui/core";
 import { Link } from "react-router-dom";
 import logo from "../../assets/logo.svg";
@@ -36,8 +38,8 @@ const useStyles = makeStyles((theme) => ({
   logoContainer: {
     padding: 0,
     "&:hover": {
-      backgroundColor: "transparent"
-    }
+      backgroundColor: "transparent",
+    },
   },
   tabContainer: {
     marginLeft: "auto",
@@ -59,9 +61,21 @@ const useStyles = makeStyles((theme) => ({
 export default function Header(props) {
   const classes = useStyles();
   const [selectedTab, setSelectedTab] = useState(0);
+  const [anchorEl, setAnchorEl] = useState(null);
+  const [menuOpen, setMenuOpen] = useState(false);
 
   const tabSelectHandler = (e, value) => {
     setSelectedTab(value);
+  };
+
+  const menuOpenHandler = (e) => {
+    setAnchorEl(e.currentTarget);
+    setMenuOpen(true);
+  };
+
+  const menuCloseHandler = (e) => {
+    setAnchorEl(null);
+    setMenuOpen(false);
   };
 
   useEffect(() => {
@@ -110,6 +124,9 @@ export default function Header(props) {
                 label="Home"
               />
               <Tab
+                aria-owns={anchorEl ? "simple-menu" : undefined}
+                aria-haspopup={anchorEl ? "true" : undefined}
+                onClick={(event) => menuOpenHandler(event)}
                 className={classes.tab}
                 component={Link}
                 to="/services"
@@ -141,6 +158,22 @@ export default function Header(props) {
             >
               Free estimate
             </Button>
+            <Menu
+              id="simple-menu"
+              anchorEl={anchorEl}
+              open={menuOpen}
+              onClose={menuCloseHandler}
+            >
+              <MenuItem onClick={menuCloseHandler}>
+                Custom Software Development
+              </MenuItem>
+              <MenuItem onClick={menuCloseHandler}>
+                Mobile App Development
+              </MenuItem>
+              <MenuItem onClick={menuCloseHandler}>
+                Website Development
+              </MenuItem>
+            </Menu>
           </Toolbar>
         </AppBar>
       </ElevationScroll>
